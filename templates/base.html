@@ -31,6 +31,21 @@
             opacity: 0;
             animation: fadeInUp 1.2s ease 0.2s forwards;
         }
+
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
     </style>
     <script src="{% static 'js/cv.js' %}" defer></script>
 </head>

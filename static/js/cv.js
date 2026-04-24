@@ -94,7 +94,7 @@ fetch("/api/projects/")
 
     data.forEach((project) => {
       container.innerHTML += `
-                    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm overflow-hidden">
+                    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm overflow-hidden hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
                         ${project.image ? `<img src="${project.image}" alt="${project.title}" class="w-full h-48 object-cover">` : ""}
                         <div class="p-4">
                             <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-100">${project.title}</h4>
@@ -118,3 +118,27 @@ themeToggle.addEventListener("click", () => {
     ? "Light Mode"
     : "Dark Mode";
 });
+
+// Scroll fade-in effect
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+        }
+    })
+})
+
+document.querySelectorAll('.scroll-fade').forEach(section => {
+    observer.observe(section)
+})
+
+//Mobile toggle
+const themeToggleMobile = document.getElementById('theme-toggle-mobile')
+if (themeToggleMobile) {
+    themeToggleMobile.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark')
+        themeToggleMobile.textContent = document.documentElement.classList.contains('dark')
+            ? 'Light Mode'
+            : 'Dark Mode'
+    })
+}
