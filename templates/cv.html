@@ -1,48 +1,58 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="min-h-screen bg-slate-50 text-slate-800">
+<div class="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-50 border-b border-slate-200 px-6 py-4 dark:bg-slate-900 dark:border-slate-700">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <span class="font-bold text-slate-900 dark:text-slate-100 text-lg">Benjamin Holt</span>
+            <button id="theme-toggle" class="text-slate-500 hover:text-blue-500 dark:text-slate-400 transition-colors text-sm font-medium">
+                Dark Mode
+            </button>
+        </div>
+    </nav>
 
     <!-- Hero Section -->
-    <section class="max-w-4xl mx-auto px-6 py-20">
+    <section class="max-w-4xl mx-auto px-6 pt-32 pb-20">
         <div class="flex flex-col items-start gap-4">
-            <h1 id="name" class="text-5xl font-bold text-slate-900"></h1>
+            <h1 id="name" class="text-5xl font-bold text-slate-900 dark:text-slate-100"></h1>
             <h2 id="job-title" class="text-2xl font-medium text-blue-500"></h2>
-            <p id="bio" class="text-lg text-slate-600 max-w-2xl leading-relaxed"></p>
+            <p id="bio" class="text-lg text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed"></p>
             <div class="flex gap-4 mt-2">
-                <a id="github-link" href="#"
-                    class="text-blue-500 hover:text-blue-700 font-medium transition-colors">GitHub</a>
-                <a id="linkedin-link" href="#"
-                    class="text-blue-500 hover:text-blue-700 font-medium transition-colors">LinkedIn</a>
-                <a id="email-link" href="#"
-                    class="text-blue-500 hover:text-blue-700 font-medium transition-colors">Email</a>
+                <a id="github-link" href="#" class="text-blue-500 hover:text-blue-700 font-medium transition-colors">GitHub</a>
+                <a id="linkedin-link" href="#" class="text-blue-500 hover:text-blue-700 font-medium transition-colors">LinkedIn</a>
+                <a id="email-link" href="#" class="text-blue-500 hover:text-blue-700 font-medium transition-colors">Email</a>
             </div>
         </div>
     </section>
+
     <!-- Skills Section -->
-    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-200">
-        <h3 class="text-2xl font-bold text-slate-900 mb-8">Skills</h3>
+    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-700">
+        <h3 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-8">Skills</h3>
         <div id="skills-container" class="flex flex-col gap-6">
             <!-- Skills injected here by JavaScript -->
         </div>
     </section>
+
     <!-- Work Experience Section -->
-    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-200">
-        <h3 class="text-2xl font-bold text-slate-900 mb-8">Work Experience</h3>
+    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-700">
+        <h3 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-8">Work Experience</h3>
         <div id="experience-container" class="flex flex-col gap-6">
             <!-- Experience injected here by JavaScript -->
         </div>
     </section>
+
     <!-- Education Section -->
-    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-200">
-        <h3 class="text-2xl font-bold text-slate-900 mb-8">Education</h3>
+    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-700">
+        <h3 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-8">Education</h3>
         <div id="education-container" class="flex flex-col gap-6">
             <!-- Education injected here by JavaScript -->
         </div>
     </section>
+
     <!-- Projects Section -->
-    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-200">
-        <h3 class="text-2xl font-bold text-slate-900 mb-8">Projects</h3>
+    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-200 dark:border-slate-700">
+        <h3 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-8">Projects</h3>
         <div id="projects-container" class="grid grid-cols-2 gap-6">
             <!-- Projects injected here by JavaScript -->
         </div>
@@ -51,7 +61,6 @@
 </div>
 
 <script>
-
     // Fetch profile data
     fetch('/api/profile/')
         .then(response => response.json())
@@ -71,7 +80,6 @@
         .then(data => {
             const container = document.getElementById('skills-container')
 
-            // Group skills by category
             const grouped = {}
             data.forEach(skill => {
                 if (!grouped[skill.category]) {
@@ -80,24 +88,24 @@
                 grouped[skill.category].push(skill)
             })
 
-            // Build HTML for each category
             Object.keys(grouped).forEach(category => {
                 const skills = grouped[category]
                 container.innerHTML += `
-                <div>
-                    <h4 class="text-sm font-semibold text-blue-500 uppercase tracking-widest mb-3">${category}</h4>
-                    <div class="flex flex-wrap gap-2">
-                        ${skills.map(skill => `
-                            <span class="bg-white border border-slate-200 text-slate-700 px-3 py-1 rounded-full text-sm shadow-sm">
-                                ${skill.name} 
-                                <span class="text-slate-400 text-xs ml-1">${skill.proficiency}</span>
-                            </span>
-                        `).join('')}
+                    <div>
+                        <h4 class="text-sm font-semibold text-blue-500 uppercase tracking-widest mb-3">${category}</h4>
+                        <div class="flex flex-wrap gap-2">
+                            ${skills.map(skill => `
+                                <span class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 px-3 py-1 rounded-full text-sm shadow-sm">
+                                    ${skill.name}
+                                    <span class="text-slate-400 dark:text-slate-500 text-xs ml-1">${skill.proficiency}</span>
+                                </span>
+                            `).join('')}
+                        </div>
                     </div>
-                </div>
-            `
+                `
             })
         })
+
     // Fetch work experience data
     fetch('/api/work-experience/')
         .then(response => response.json())
@@ -106,16 +114,16 @@
 
             data.forEach(exp => {
                 container.innerHTML += `
-                <div class="mb-6">
-                    <h4 class="text-lg font-semibold text-slate-900">${exp.job_title} at ${exp.company}</h4>
-                    <p class="text-sm text-slate-500">${exp.start_date} - ${exp.is_current ? 'Present' : exp.end_date}</p>
-                    <p class="text-base text-slate-700 mt-2">${exp.description}</p>
-                </div>
-            `
+                    <div class="mb-6">
+                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-100">${exp.job_title} at ${exp.company}</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">${exp.start_date} - ${exp.is_current ? 'Present' : exp.end_date}</p>
+                        <p class="text-base text-slate-700 dark:text-slate-300 mt-2">${exp.description}</p>
+                    </div>
+                `
             })
-
         })
-    //Fetch education data
+
+    // Fetch education data
     fetch('/api/education/')
         .then(response => response.json())
         .then(data => {
@@ -124,13 +132,15 @@
             data.forEach(edu => {
                 container.innerHTML += `
                     <div class="mb-6">
-                        <h4 class="text-lg font-semibold text-slate-900">${edu.degree}</h4>
-                        <p class="text-sm text-slate-500">${edu.institution} • ${edu.start_date} - ${edu.is_current ? 'Present' : edu.end_date}</p>
-                        <p class="text-base text-slate-700 mt-2">${edu.description}</p>
+                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-100">${edu.degree}</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">${edu.institution} • ${edu.start_date} - ${edu.is_current ? 'Present' : edu.end_date}</p>
+                        <p class="text-base text-slate-700 dark:text-slate-300 mt-2">${edu.description}</p>
                     </div>
                 `
             })
         })
+
+    // Fetch projects data
     fetch('/api/projects/')
         .then(response => response.json())
         .then(data => {
@@ -138,18 +148,27 @@
 
             data.forEach(project => {
                 container.innerHTML += `
-                    <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
-                        <h4 class="text-lg font-semibold text-slate-900">${project.title}</h4>
-                        <p class="text-sm text-slate-500">${project.tech_stack}</p>
-                        <p class="text-base text-slate-700 mt-2">${project.description}</p>
+                    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 shadow-sm">
+                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-100">${project.title}</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">${project.tech_stack}</p>
+                        <p class="text-base text-slate-700 dark:text-slate-300 mt-2">${project.description}</p>
                         <div class="flex gap-4 mt-3">
-                        <a href="${project.github_url}" target="_blank" class="text-blue-500 hover:text-blue-700 font-medium text-sm">GitHub</a>
-                        <a href="${project.live_url}" target="_blank" class="text-blue-500 hover:text-blue-700 font-medium text-sm">Live Demo</a>
+                            <a href="${project.github_url}" target="_blank" class="text-blue-500 hover:text-blue-700 font-medium text-sm">GitHub</a>
+                            <a href="${project.live_url}" target="_blank" class="text-blue-500 hover:text-blue-700 font-medium text-sm">Live Demo</a>
                         </div>
                     </div>
                 `
             })
         })
+
+    // Dark mode toggle
+    const themeToggle = document.getElementById('theme-toggle')
+    themeToggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark')
+        themeToggle.textContent = document.documentElement.classList.contains('dark')
+            ? 'Light Mode'
+            : 'Dark Mode'
+    })
 </script>
 
 {% endblock %}
