@@ -14,6 +14,9 @@ fetch("/api/profile/")
     document.getElementById("github-link").href = profile.github_url;
     document.getElementById("linkedin-link").href = profile.linkedin_url;
     document.getElementById("email-link").href = "mailto:" + profile.email;
+    document.getElementById('footer-github').href = profile.github_url
+    document.getElementById('footer-linkedin').href = profile.linkedin_url
+    document.getElementById('footer-email').href = 'mailto:' + profile.email
   });
 
 // Fetch skills data
