@@ -26,7 +26,7 @@ class WorkExperience(models.Model):
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     is_current = models.BooleanField(default=False)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, null=True)
     order = models.IntegerField(default=0)
 
     def __str__(self):
@@ -43,7 +43,7 @@ class Education(models.Model):
     end_date = models.DateField(blank=True, null=True)
     grade = models.CharField(max_length=100, blank=True)
     is_current = models.BooleanField(default=False)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, null=True)
     order = models.IntegerField(default=0)
 
     def __str__(self):

@@ -14,6 +14,7 @@
             darkMode: 'class'
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         @keyframes fadeInUp {
             from {
@@ -45,6 +46,70 @@
 
         html {
             scroll-behavior: smooth;
+        }
+
+        .year-item {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            height: 80px;
+            justify-content: center;
+        }
+
+        .year-label-above {
+            position: absolute;
+            top: 0;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: color 0.25s ease;
+        }
+
+        .year-label-below {
+            position: absolute;
+            bottom: 0;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: color 0.25s ease;
+        }
+
+        .year-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid;
+            transition: all 0.25s ease;
+            flex-shrink: 0;
+        }
+
+        .cards-wrapper {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: all 0.4s ease;
+        }
+
+        .cards-wrapper.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cards-wrapper.exit {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+
+        @media (max-width: 768px) {
+            .year-track {
+                display: none !important;
+            }
+
+            .mobile-nav {
+                display: flex !important;
+            }
         }
     </style>
     <script src="{% static 'js/cv.js' %}" defer></script>
