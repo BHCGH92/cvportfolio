@@ -56,10 +56,10 @@ class Skill(models.Model):
 
     # Constants are conventionally defined in uppercase, and they represent fixed values that are not expect to change.
     CATEGORY_CHOICES = [
-        ('frontend', 'Frontend'),
-        ('backend', 'Backend'),
-        ('tools', 'Tools'),
-        ('soft_skills', 'Soft Skills'),
+    ('languages', 'Languages'),
+    ('frameworks', 'Frameworks'),
+    ('tools', 'Tools'),
+    ('soft_skills', 'Soft Skills'),
     ]
 
     PROFICIENCY_CHOICES = [

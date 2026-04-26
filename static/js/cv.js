@@ -25,6 +25,29 @@ fetch("/api/skills/")
   .then((data) => {
     const container = document.getElementById("skills-container");
 
+    const categoryLabels = {
+    languages: "Languages",
+    frameworks: "Frameworks",
+    tools: "Tools",
+    soft_skills: "Soft Skills",
+    };
+
+    const proficiencyDots = {
+      beginner: "bg-slate-400",
+      intermediate: "bg-blue-500",
+      advanced: "bg-emerald-500",
+    };
+
+    // Add legend
+    container.innerHTML = `
+      <div class="flex gap-6 mb-8 flex-wrap">
+        <div class="flex items-center gap-2 text-xs text-slate-400"><span class="w-2 h-2 rounded-full bg-slate-400 inline-block"></span> Beginner</div>
+        <div class="flex items-center gap-2 text-xs text-slate-400"><span class="w-2 h-2 rounded-full bg-blue-500 inline-block"></span> Intermediate</div>
+        <div class="flex items-center gap-2 text-xs text-slate-400"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> Advanced</div>
+      </div>
+    `;
+
+    // Group skills by category
     const grouped = {};
     data.forEach((skill) => {
       if (!grouped[skill.category]) {
@@ -33,19 +56,22 @@ fetch("/api/skills/")
       grouped[skill.category].push(skill);
     });
 
+    // Build HTML for each category
     Object.keys(grouped).forEach((category) => {
       const skills = grouped[category];
+      const label = categoryLabels[category] || category.replace(/_/g, " ");
+
       container.innerHTML += `
-        <div>
-          <h4 class="text-sm font-semibold text-blue-500 uppercase tracking-widest mb-3">${category}</h4>
-          <div class="flex flex-wrap gap-2">
+        <div class="mb-8">
+          <h4 class="text-xs font-bold tracking-widest text-blue-500 uppercase mb-4">${label}</h4>
+          <div class="grid grid-cols-2 gap-3">
             ${skills
               .map(
                 (skill) => `
-              <span class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 px-3 py-1 rounded-full text-sm shadow-sm">
-                ${skill.name}
-                <span class="text-slate-400 dark:text-slate-500 text-xs ml-1">${skill.proficiency}</span>
-              </span>
+              <div class="flex items-center justify-between bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-3 hover:-translate-y-0.5 hover:border-blue-500 transition-all duration-200">
+                <span class="text-sm font-semibold text-slate-800 dark:text-slate-100">${skill.name}</span>
+                <span class="w-2 h-2 rounded-full flex-shrink-0 ml-3 ${proficiencyDots[skill.proficiency] || "bg-slate-400"}"></span>
+              </div>
             `,
               )
               .join("")}
