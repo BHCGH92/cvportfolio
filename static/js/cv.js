@@ -26,10 +26,10 @@ fetch("/api/skills/")
     const container = document.getElementById("skills-container");
 
     const categoryLabels = {
-    languages: "Languages",
-    frameworks: "Frameworks",
-    tools: "Tools",
-    soft_skills: "Soft Skills",
+      languages: "Languages",
+      frameworks: "Frameworks",
+      tools: "Tools",
+      soft_skills: "Soft Skills",
     };
 
     const proficiencyDots = {
@@ -301,4 +301,62 @@ if (themeToggleMobile) {
       ? "Light Mode"
       : "Dark Mode";
   });
+}
+
+// Chat assistant
+function toggleChat() {
+  const window = document.getElementById("chat-window");
+  window.classList.toggle("hidden");
+  document.getElementById("chat-input").focus();
+}
+
+function sendMessage() {
+  const input = document.getElementById("chat-input");
+  const message = input.value.trim();
+  if (!message) return;
+
+  const messages = document.getElementById("chat-messages");
+
+  // Add user message
+  messages.innerHTML += `
+        <div class="bg-blue-500 rounded-lg px-3 py-2 text-sm text-white self-end max-w-xs ml-auto">
+            ${message}
+        </div>
+    `;
+
+  input.value = "";
+
+  // Add loading indicator
+  messages.innerHTML += `
+        <div id="chat-loading" class="bg-slate-100 dark:bg-slate-700 rounded-lg px-3 py-2 text-sm text-slate-500 self-start">
+            Thinking...
+        </div>
+    `;
+
+  messages.scrollTop = messages.scrollHeight;
+
+  // Send to API
+  fetch("/api/chat/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: message }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById("chat-loading").remove();
+      messages.innerHTML += `
+            <div class="bg-slate-100 dark:bg-slate-700 rounded-lg px-3 py-2 text-sm text-slate-700 dark:text-slate-300 self-start max-w-xs">
+                ${data.response}
+            </div>
+        `;
+      messages.scrollTop = messages.scrollHeight;
+    })
+    .catch(() => {
+      document.getElementById("chat-loading").remove();
+      messages.innerHTML += `
+            <div class="bg-red-100 rounded-lg px-3 py-2 text-sm text-red-600 self-start max-w-xs">
+                Sorry, something went wrong. Please try again.
+            </div>
+        `;
+    });
 }
